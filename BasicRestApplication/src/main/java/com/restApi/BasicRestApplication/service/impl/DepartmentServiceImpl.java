@@ -42,10 +42,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDTO updateDepartment(String departmentCode, DepartmentDTO departmentDTO) {
-        departmentDTO.setDepartmentCode(departmentCode);
+    public DepartmentDTO updateDepartment(Long departmentId, DepartmentDTO departmentDTO) {
+        Department departmentFromDb = departmentRepository.findById(departmentId).orElseThrow();
+
+        departmentDTO.setId(departmentId);
         Department updatedDepartment = departmentMapper.departmentDTOToDepartment(departmentDTO);
+        updatedDepartment.setEmployees(departmentFromDb.getEmployees());
         Department savedDepartment = departmentRepository.save(updatedDepartment);
+
         return departmentMapper.departmentToDepartmentDTO(savedDepartment);
     }
 

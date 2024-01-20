@@ -10,6 +10,6 @@ public interface DepartmentService {
     DepartmentDTO addNewDepartment(DepartmentDTO departmentDTO);
     List<DepartmentDTO> getAllDepartments();
     DepartmentDTO getDepartmentByCode(String departmentCode);
-    DepartmentDTO updateDepartment(String departmentCode, DepartmentDTO departmentDTO);
+    DepartmentDTO updateDepartment(Long departmentId, DepartmentDTO departmentDTO);
     String deleteEmployee(Long departmentId);
 }
