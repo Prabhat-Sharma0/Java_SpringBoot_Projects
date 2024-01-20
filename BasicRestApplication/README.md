@@ -1,0 +1,2 @@
+In this folder, we have created an spring boot application where we will playing with few interesting things. And will try to learn as much as we can in it. 
+I will keep updating it on frequent basis. So stay tuned.
