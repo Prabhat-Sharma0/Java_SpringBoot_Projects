@@ -18,6 +18,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeMapper employeeMapper;
 
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
     public EmployeeDTO addEmployeeData(EmployeeDTO employeeDTO) {
         Employee employee = employeeMapper.employeeDTOToEmployee(employeeDTO);
 
@@ -28,22 +32,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.employeeToEmployeeDTO(employee);
     }
 
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
-
     public EmployeeDTO updateEmployee(String employeeId, EmployeeDTO employeeDTO) {
         employeeDTO.setId(employeeId);
-        Employee emp = employeeMapper.employeeDTOToEmployee(employeeDTO);
-        Employee updatedEmployee = employeeRepository.save(emp);
+        Employee updatedEmployee = employeeMapper.employeeDTOToEmployee(employeeDTO);
+        Employee savedEmployee = employeeRepository.save(updatedEmployee);
 
-        return employeeMapper.employeeToEmployeeDTO(updatedEmployee);
+        return employeeMapper.employeeToEmployeeDTO(savedEmployee);
     }
 
     public String deleteEmployee(String employeeId) {
         if (employeeRepository.findAll().stream().anyMatch(emp -> emp.getId().equals(employeeId))) {
             employeeRepository.delete(employeeRepository.findById(employeeId).orElseThrow());
-            return "Employee Details Deleted";
+            return "Employee details deleted";
         }
 
         return "No employee with such id is present in the database.";
