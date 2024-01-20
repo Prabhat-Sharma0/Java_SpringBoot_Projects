@@ -19,6 +19,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private DepartmentMapper departmentMapper;
 
+    public List<DepartmentDTO> getAllDepartments() {
+        return departmentMapper.departmentToDepartmentDTO(departmentRepository.findAll());
+    }
+
     @Override
     public DepartmentDTO addNewDepartment(DepartmentDTO departmentDTO) {
         Department department = departmentMapper.departmentDTOToDepartment(departmentDTO);
@@ -29,10 +33,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
 
         return departmentMapper.departmentToDepartmentDTO(department);
-    }
-
-    public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
     }
 
     @Override

@@ -18,8 +18,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeMapper employeeMapper;
 
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeMapper.employeeToEmployeeDTO(employeeRepository.findAll());
     }
 
     public EmployeeDTO addEmployeeData(EmployeeDTO employeeDTO) {

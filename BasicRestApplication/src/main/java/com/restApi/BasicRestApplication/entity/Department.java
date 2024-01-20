@@ -40,8 +40,8 @@ public class Department {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-//
-//    @JsonIgnoreProperties("department")
-//    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<Employee> employees = new HashSet<>();
+
+    @JsonIgnoreProperties("department")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Employee> employees = new HashSet<>();
 }
