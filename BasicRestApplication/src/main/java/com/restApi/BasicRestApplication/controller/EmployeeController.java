@@ -1,10 +1,13 @@
 package com.restApi.BasicRestApplication.controller;
 
+import com.restApi.BasicRestApplication.dto.EmployeeAndDepartmentDTO;
 import com.restApi.BasicRestApplication.dto.EmployeeDTO;
-import com.restApi.BasicRestApplication.entity.Employee;
+import com.restApi.BasicRestApplication.dto.EmployeeSearchCriteriaDTO;
 import com.restApi.BasicRestApplication.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +22,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/all")
-    public List<Employee> getAllEmployeeData() {
+    public List<EmployeeDTO> getAllEmployeeData() {
         return employeeService.getAllEmployees();
     }
 
@@ -29,18 +32,33 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    public EmployeeDTO addEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return employeeService.addEmployeeData(employeeDTO);
+    public EmployeeDTO addEmployee(@Param("departmentId") Long departmentId, @RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.addEmployeeData(departmentId, employeeDTO);
     }
 
     @PutMapping("/update/{employeeId}")
-    public EmployeeDTO updateEmployee(@PathVariable("employeeId") String employeeId, @RequestBody EmployeeDTO employeeDTO) {
-        return employeeService.updateEmployee(employeeId, employeeDTO);
+    public EmployeeDTO updateEmployee(@Param("departmentId") Long departmentId, @PathVariable("employeeId") String employeeId, @RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.updateEmployee(departmentId, employeeId, employeeDTO);
     }
 
     @DeleteMapping("/delete/{employeeId}")
-    public String deleteEmployee(@PathVariable("employeeId") String employeeId) {
-        return employeeService.deleteEmployee(employeeId);
+    public String deleteEmployee(@Param("departmentId") Long departmentId, @PathVariable("employeeId") String employeeId) {
+        return employeeService.deleteEmployee(departmentId, employeeId);
+    }
+
+    @GetMapping("/department/{departmentId}")
+    public List<EmployeeDTO> getEmployeesOfDepartment(@PathVariable("departmentId") Long departmentId) {
+        return employeeService.getEmployeesByDepartmentId(departmentId);
+    }
+
+    @PostMapping("/search")
+    public Page<EmployeeDTO> getAllEmployeesUsingPagination(@Valid @RequestBody EmployeeSearchCriteriaDTO employeeSearchCriteriaDTO) {
+        return employeeService.getEmployeesByPagination(employeeSearchCriteriaDTO);
+    }
+
+    @GetMapping("/employee-department")
+    public EmployeeAndDepartmentDTO getEmployeeAndDepartmentData(@Param("email") String email) {
+        return employeeService.getEmployeeAndDepartmentByEmployeeEmail(email);
     }
 
 }

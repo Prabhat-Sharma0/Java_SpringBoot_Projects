@@ -2,6 +2,8 @@ package com.restApi.BasicRestApplication.dto;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @ToString
@@ -13,5 +15,5 @@ public class DepartmentDTO {
     private String departmentCode;
     private String departmentName;
     private String departmentDescription;
-//    private Set<EmployeeDTO> employees;
+    private Set<EmployeeDTO> employees;
 }

@@ -1,10 +1,12 @@
 package com.restApi.BasicRestApplication.controller;
 
 import com.restApi.BasicRestApplication.dto.DepartmentDTO;
-import com.restApi.BasicRestApplication.entity.Department;
+import com.restApi.BasicRestApplication.dto.DepartmentSearchCriteriaDTO;
 import com.restApi.BasicRestApplication.service.DepartmentService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping("/all")
-    public List<Department> getAllDepartments() {
+    public List<DepartmentDTO> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
 
@@ -34,7 +36,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/update/{departmentId}")
-    public DepartmentDTO updateEmployee(@PathVariable("departmentId") String departmentId, @RequestBody DepartmentDTO departmentDTO) {
+    public DepartmentDTO updateEmployee(@PathVariable("departmentId") Long departmentId, @RequestBody DepartmentDTO departmentDTO) {
         return departmentService.updateDepartment(departmentId, departmentDTO);
     }
 
@@ -43,5 +45,9 @@ public class DepartmentController {
         return departmentService.deleteEmployee(departmentId);
     }
 
+    @PostMapping("/search")
+    public Page<DepartmentDTO> getAllDepartmentsUsingPagination(@Valid @RequestBody DepartmentSearchCriteriaDTO departmentSearchCriteriaDTO) {
+        return departmentService.getAllDepartmentsUsingPagination(departmentSearchCriteriaDTO);
+    }
 
 }

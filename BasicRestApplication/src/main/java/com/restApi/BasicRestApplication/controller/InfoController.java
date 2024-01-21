@@ -12,7 +12,7 @@ public class InfoController {
 
     @GetMapping("/message")
     public String getMessage() {
-        return "This is the message!!!!";
+        return "The application is up now. We can check other messages.";
     }
 
 }
