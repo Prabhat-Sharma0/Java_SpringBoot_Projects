@@ -1,5 +1,6 @@
 package com.restApi.BasicRestApplication.controller;
 
+import com.restApi.BasicRestApplication.dto.EmployeeAndDepartmentDTO;
 import com.restApi.BasicRestApplication.dto.EmployeeDTO;
 import com.restApi.BasicRestApplication.dto.EmployeeSearchCriteriaDTO;
 import com.restApi.BasicRestApplication.service.EmployeeService;
@@ -53,6 +54,11 @@ public class EmployeeController {
     @PostMapping("/search")
     public Page<EmployeeDTO> getAllEmployeesUsingPagination(@Valid @RequestBody EmployeeSearchCriteriaDTO employeeSearchCriteriaDTO) {
         return employeeService.getEmployeesByPagination(employeeSearchCriteriaDTO);
+    }
+
+    @GetMapping("/employee-department")
+    public EmployeeAndDepartmentDTO getEmployeeAndDepartmentData(@Param("email") String email) {
+        return employeeService.getEmployeeAndDepartmentByEmployeeEmail(email);
     }
 
 }

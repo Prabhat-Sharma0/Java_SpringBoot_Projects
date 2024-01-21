@@ -4,6 +4,7 @@ import com.restApi.BasicRestApplication.dto.EmployeeSearchCriteriaDTO;
 import com.restApi.BasicRestApplication.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,6 +21,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     Page<Employee> getAllEmployeesUsingPagination(
             @Param("criteria") EmployeeSearchCriteriaDTO employeeSearchCriteriaDTO,
             Pageable pageable);
+
+
+    @EntityGraph(attributePaths = "department")
+    @Query(value = """
+            select emp from Employee emp where emp.email = :email
+            """)
+    Employee getEmployeeAndDepartmentByEmployeeEmail(@Param("email") String email);
 
     List<Employee> findByDepartmentId(Long departmentId);
 

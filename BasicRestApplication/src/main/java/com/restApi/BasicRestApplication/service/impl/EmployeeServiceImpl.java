@@ -1,5 +1,6 @@
 package com.restApi.BasicRestApplication.service.impl;
 
+import com.restApi.BasicRestApplication.dto.EmployeeAndDepartmentDTO;
 import com.restApi.BasicRestApplication.dto.EmployeeDTO;
 import com.restApi.BasicRestApplication.entity.Department;
 import com.restApi.BasicRestApplication.entity.Employee;
@@ -102,6 +103,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<EmployeeDTO> employeeDTOS = employeeMapper.employeeToEmployeeDTO(employeesFromDb.getContent());
 
         return new PageImpl<>(employeeDTOS, pageable, employeesFromDb.getTotalElements());
+    }
+
+    public EmployeeAndDepartmentDTO getEmployeeAndDepartmentByEmployeeEmail(String email) {
+        Employee employeeFromDB = employeeRepository.getEmployeeAndDepartmentByEmployeeEmail(email);
+
+        return employeeMapper.employeeToEmployeeAndDepartmentDTO(employeeFromDB);
     }
 
     private boolean checkEmployeeBelongsToDepartment(Department department, Employee employee) {

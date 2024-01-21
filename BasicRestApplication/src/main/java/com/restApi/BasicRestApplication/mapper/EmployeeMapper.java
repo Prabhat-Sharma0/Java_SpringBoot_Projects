@@ -1,5 +1,6 @@
 package com.restApi.BasicRestApplication.mapper;
 
+import com.restApi.BasicRestApplication.dto.EmployeeAndDepartmentDTO;
 import com.restApi.BasicRestApplication.dto.EmployeeDTO;
 import com.restApi.BasicRestApplication.entity.Employee;
 import org.modelmapper.ModelMapper;
@@ -25,6 +26,20 @@ public class EmployeeMapper {
 
     public List<Employee> employeeDTOToEmployee(List<EmployeeDTO> employeeDTOS) {
         return employeeDTOS.stream().map(empDto -> modelMapper.map(empDto, Employee.class)).toList();
+    }
+
+    public EmployeeAndDepartmentDTO employeeToEmployeeAndDepartmentDTO(Employee employee) {
+        EmployeeAndDepartmentDTO employeeAndDepartmentDTO = modelMapper.map(employee, EmployeeAndDepartmentDTO.class);
+        employeeAndDepartmentDTO.setDepartmentDTO(modelMapper.map(employee.getDepartment(), EmployeeAndDepartmentDTO.DepartmentDTO.class));
+        return employeeAndDepartmentDTO;
+    }
+
+    public List<EmployeeAndDepartmentDTO> employeesToEmployeeAndDepartmentDTOs(List<Employee> employees) {
+        return employees.stream().map(employee -> {
+            EmployeeAndDepartmentDTO employeeAndDepartmentDTO = modelMapper.map(employee, EmployeeAndDepartmentDTO.class);
+            employeeAndDepartmentDTO.setDepartmentDTO(modelMapper.map(employee.getDepartment(), EmployeeAndDepartmentDTO.DepartmentDTO.class));
+            return employeeAndDepartmentDTO;
+        }).toList();
     }
 
 }

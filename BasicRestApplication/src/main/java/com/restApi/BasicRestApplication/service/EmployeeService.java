@@ -1,5 +1,6 @@
 package com.restApi.BasicRestApplication.service;
 
+import com.restApi.BasicRestApplication.dto.EmployeeAndDepartmentDTO;
 import com.restApi.BasicRestApplication.dto.EmployeeDTO;
 import com.restApi.BasicRestApplication.dto.EmployeeSearchCriteriaDTO;
 import org.springframework.data.domain.Page;
@@ -16,4 +17,5 @@ public interface EmployeeService {
     String deleteEmployee(Long departmentId, String employeeId);
     List<EmployeeDTO> getEmployeesByDepartmentId(Long departmentId);
     Page<EmployeeDTO> getEmployeesByPagination(EmployeeSearchCriteriaDTO employeeSearchCriteriaDTO);
+    EmployeeAndDepartmentDTO getEmployeeAndDepartmentByEmployeeEmail(String email);
 }
